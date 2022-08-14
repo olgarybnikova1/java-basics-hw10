@@ -1,10 +1,11 @@
-import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.fail;
-
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-public class ExampleExceptionTest {
+import static org.testng.Assert.*;
+import static org.testng.Assert.assertEquals;
+
+public class
+ExampleExceptionTest {
 
   /**
    * Test data for positive test.
@@ -15,8 +16,9 @@ public class ExampleExceptionTest {
   public static Object[][] data() {
     return new Object[][]{
         {2, 2, 4},
-        {2, 3, 6}
-        // TODO add 2 more test data here
+        {2, 3, 6},
+        {7, 7, 49},
+        {0, 2, 0}
     };
   }
 
@@ -29,19 +31,28 @@ public class ExampleExceptionTest {
   public static Object[][] negativeData() {
     return new Object[][]{
         {-2, 2},
-        {2, -2}
-        // TODO add 2 more test data here
+        {2, -2},
+        {-3, -3},
+        {1, -1}
     };
   }
 
   @Test(dataProvider = "data")
   public void testRectangleArea(int a, int b, int c) {
-    // TODO put your code here
+    int actualResult = ExampleException.rectangleArea(a, b);
+    assertEquals(actualResult, c, "actualResult is incorrect");
   }
-
-
+  
   @Test(dataProvider = "negativeData")
   public void testRectangleAreaNegative(int a, int b) {
-    // TODO put your code here
+    String expectedMessage = "input value is below zero!";
+    String actualMessage = new String();
+
+    try {
+      ExampleException.rectangleArea(a, b);
+    } catch (IllegalArgumentException exception) {
+      actualMessage = exception.getMessage();
+    }
+    assertEquals(actualMessage, expectedMessage);
   }
 }
